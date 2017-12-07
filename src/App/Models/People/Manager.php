@@ -11,7 +11,7 @@ class Manager extends Employee
     /**
      * @var int $reportee
      */
-    protected $reportee = 0;
+    public $reportee = 0;
 
     /**
      * @var array $filable
