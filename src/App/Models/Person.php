@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: MrSir
- * Date: 12/6/2017
- * Time: 9:30 PM
- */
 
 namespace App\Models;
 
@@ -18,12 +12,12 @@ class Person implements PersonInterface
     /**
      * @var string $firstName
      */
-    protected $firstName;
+    public $firstName;
 
     /**
      * @var string $lastName
      */
-    protected $lastName;
+    public $lastName;
 
     /**
      * @var array $filable
