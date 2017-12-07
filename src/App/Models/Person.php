@@ -10,6 +10,7 @@ namespace App\Models;
 
 use App\Exceptions\EmptyFirstName;
 use App\Exceptions\EmptyLastName;
+use App\Exceptions\MissingRequiredParameter;
 use App\Interfaces\Person as PersonInterface;
 
 class Person implements PersonInterface
@@ -54,6 +55,7 @@ class Person implements PersonInterface
      *
      * @param array $params
      *
+     * @throws MissingRequiredParameter
      * @return Person
      */
     public function create(array $params): Person
