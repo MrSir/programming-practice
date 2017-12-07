@@ -64,16 +64,16 @@ class EmployeeTest extends TestCase
     }
 
     /**
-     * @group App
-     * @group App.Models
-     * @group App.Models.People
-     * @group App.Models.People.Employee
-     * @group App.Models.People.Employee.setFirstName
-     * @group App.Models.People.Employee.setFirstName.failure
-     * @group App.Models.People.Employee.setFirstName.failure.blank
+     * @group                    App
+     * @group                    App.Models
+     * @group                    App.Models.People
+     * @group                    App.Models.People.Employee
+     * @group                    App.Models.People.Employee.setFirstName
+     * @group                    App.Models.People.Employee.setFirstName.failure
+     * @group                    App.Models.People.Employee.setFirstName.failure.blank
      * @expectedException App\Exceptions\EmptyFirstName
      * @expectedExceptionMessage Empty first name.
-     * @expectedExceptionCode 100
+     * @expectedExceptionCode    100
      */
     public function testSetFirstNameFailureBlank()
     {
@@ -135,16 +135,16 @@ class EmployeeTest extends TestCase
     }
 
     /**
-     * @group App
-     * @group App.Models
-     * @group App.Models.People
-     * @group App.Models.People.Employee
-     * @group App.Models.People.Employee.setLastName
-     * @group App.Models.People.Employee.setLastName.failure
-     * @group App.Models.People.Employee.setLastName.failure.blank
+     * @group                    App
+     * @group                    App.Models
+     * @group                    App.Models.People
+     * @group                    App.Models.People.Employee
+     * @group                    App.Models.People.Employee.setLastName
+     * @group                    App.Models.People.Employee.setLastName.failure
+     * @group                    App.Models.People.Employee.setLastName.failure.blank
      * @expectedException App\Exceptions\EmptyLastName
      * @expectedExceptionMessage Empty last name.
-     * @expectedExceptionCode 200
+     * @expectedExceptionCode    200
      */
     public function testSetLastNameFailureBlank()
     {
@@ -387,25 +387,25 @@ class EmployeeTest extends TestCase
         ];
 
         $person = new Employee();
-        $person->create($params);
+        $employee = $person->create($params);
 
         $this->assertEquals(
             $params,
-            $person->toArray()
+            $employee->toArray()
         );
     }
 
     /**
-     * @group App
-     * @group App.Models
-     * @group App.Models.People
-     * @group App.Models.People.Employee
-     * @group App.Models.People.Employee.create
-     * @group App.Models.People.Employee.create.failure
-     * @group App.Models.People.Employee.create.failure.firstName
+     * @group                    App
+     * @group                    App.Models
+     * @group                    App.Models.People
+     * @group                    App.Models.People.Employee
+     * @group                    App.Models.People.Employee.create
+     * @group                    App.Models.People.Employee.create.failure
+     * @group                    App.Models.People.Employee.create.failure.firstName
      * @expectedException App\Exceptions\MissingRequiredParameter
      * @expectedExceptionMessage The firstName parameter is required
-     * @expectedExceptionCode 300
+     * @expectedExceptionCode    300
      */
     public function testCreateEmployeeFailureFirstName()
     {
@@ -414,20 +414,20 @@ class EmployeeTest extends TestCase
         ];
 
         $person = new Employee();
-        $person->create($params);
+        $employee = $person->create($params);
     }
 
     /**
-     * @group App
-     * @group App.Models
-     * @group App.Models.People
-     * @group App.Models.People.Employee
-     * @group App.Models.People.Employee.create
-     * @group App.Models.People.Employee.create.failure
-     * @group App.Models.People.Employee.create.failure.lastName
+     * @group                    App
+     * @group                    App.Models
+     * @group                    App.Models.People
+     * @group                    App.Models.People.Employee
+     * @group                    App.Models.People.Employee.create
+     * @group                    App.Models.People.Employee.create.failure
+     * @group                    App.Models.People.Employee.create.failure.lastName
      * @expectedException App\Exceptions\MissingRequiredParameter
      * @expectedExceptionMessage The lastName parameter is required
-     * @expectedExceptionCode 300
+     * @expectedExceptionCode    300
      */
     public function testCreateEmployeeFailureLastName()
     {
@@ -436,7 +436,7 @@ class EmployeeTest extends TestCase
         ];
 
         $person = new Employee();
-        $person->create($params);
+        $employee = $person->create($params);
     }
 
     /**
@@ -474,9 +474,9 @@ class EmployeeTest extends TestCase
         ];
 
         $person = new Employee();
-        $person->create($params);
+        $employee = $person->create($params);
 
-        $manager = $person->promote();
+        $manager = $employee->promote();
 
         $this->assertEquals(
             Manager::class,
@@ -503,5 +503,98 @@ class EmployeeTest extends TestCase
             Manager::class,
             get_class($manager)
         );
+    }
+
+    /**
+     * @group App
+     * @group App.Models
+     * @group App.Models.People
+     * @group App.Models.People.Employee
+     * @group App.Models.People.Employee.convert
+     * @group App.Models.People.Employee.convert.success
+     */
+    public function testMassCreateEmployeeSuccess()
+    {
+        $params = [
+            [
+                'firstName' => 'Joe',
+                'lastName' => 'Shmoe',
+                'fullName' => 'Joe Shmoe',
+            ],
+            [
+                'firstName' => 'John',
+                'lastName' => 'Smith',
+                'fullName' => 'John Smith',
+            ],
+            [
+                'firstName' => 'Rick',
+                'lastName' => 'Astley',
+                'fullName' => 'Rick Astley',
+            ],
+        ];
+
+        $person = new Employee();
+        $employees = $person->convert($params);
+
+        foreach ($employees as $indx => $employee) {
+            $this->assertEquals(
+                Employee::class,
+                get_class($employee)
+            );
+
+            $this->assertEquals(
+                $params[$indx],
+                $employee->toArray()
+            );
+        }
+    }
+
+    /**
+     * @group App
+     * @group App.Models
+     * @group App.Models.People
+     * @group App.Models.People.Employee
+     * @group App.Models.People.Employee.convert
+     * @group App.Models.People.Employee.convert.success
+     * @group App.Models.People.Employee.convert.success.excludeInvalid
+     */
+    public function testMassCreateEmployeeSuccessExcludeInvalid()
+    {
+        $params = [
+            [
+                'firstName' => 'Joe',
+                'lastName' => 'Shmoe',
+                'fullName' => 'Joe Shmoe',
+            ],
+            [
+                'firstName' => 'John',
+                'lastName' => 'Smith',
+                'fullName' => 'John Smith',
+            ],
+            [
+                'lastName' => 'Astley',
+                'fullName' => 'Rick Astley',
+            ],
+        ];
+
+        $person = new Employee();
+        $employees = $person->convert($params);
+
+        $this->assertEquals(
+            2,
+            count($employees)
+        );
+
+        foreach ($employees as $indx => $employee) {
+            $this->assertEquals(
+                Employee::class,
+                get_class($employee)
+            );
+
+            $this->assertEquals(
+                $params[$indx],
+                $employee->toArray()
+            );
+        }
     }
 }

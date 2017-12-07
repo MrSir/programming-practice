@@ -2,6 +2,8 @@
 
 namespace App\Models\People;
 
+use App\Exceptions\MissingRequiredParameter;
+
 /**
  * Class Manager
  * @package App\Models\People
@@ -54,5 +56,25 @@ class Manager extends Employee
     public function setReportee(int $reportee)
     {
         $this->reportee = $reportee;
+    }
+
+    /**
+     * This function generates an array of Manager objects
+     *
+     * @param array $managersArray
+     *
+     * @return array
+     */
+    public function convert(array $managersArray)
+    {
+        $result = $this->massConvert(
+            $managersArray,
+            self::class
+        );
+
+        // One would Log the $result['rejectedPeopleArray'] somewhere for
+        // future reference and resolution
+
+        return $result['peopleObjectArray'];
     }
 }

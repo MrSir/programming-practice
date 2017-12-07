@@ -68,6 +68,9 @@ abstract class Person implements PersonInterface
             }
         }
 
+        $type = get_class($this);
+        $newPerson = new $type();
+
         // populate the fillable attributes
         foreach ($this->fillable as $fillableKey) {
             $condition = array_key_exists(
@@ -79,11 +82,44 @@ abstract class Person implements PersonInterface
                 $value = $params[$fillableKey];
                 $method = 'set' . ucfirst($fillableKey);
 
-                $this->$method($value);
+                $newPerson->$method($value);
             }
         }
 
-        return $this;
+        return $newPerson;
+    }
+
+    /**
+     * This function generates an array of People objects
+     *
+     * @param array  $peopleArray
+     * @param string $type
+     *
+     * @return array
+     */
+    public function massConvert(array $peopleArray, string $type)
+    {
+        $peopleObjectArray = [];
+        $rejectedPeopleArray = [];
+
+        foreach ($peopleArray as $personArray) {
+            try {
+                $class = new $type();
+                $manager = $class->create($personArray);
+
+                $peopleObjectArray[] = $manager;
+            } catch (MissingRequiredParameter $e) {
+                $personArray['errors'] = $e->getMessage();
+                $rejectedPeopleArray[] = $personArray;
+            }
+        }
+
+        $result = [
+            'peopleObjectArray' => $peopleObjectArray,
+            'rejectedPeopleArray' => $rejectedPeopleArray,
+        ];
+
+        return $result;
     }
 
     /**
@@ -118,7 +154,7 @@ abstract class Person implements PersonInterface
      * @param string $name
      *
      * @throws EmptyLastName
-     * @return mixed
+     * @return void
      */
     public function setLastName(string $name)
     {

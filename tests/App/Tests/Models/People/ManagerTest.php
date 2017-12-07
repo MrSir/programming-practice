@@ -483,11 +483,11 @@ class ManagerTest extends TestCase
         ];
 
         $person = new Manager();
-        $person->create($params);
+        $manager = $person->create($params);
 
         $this->assertEquals(
             $params,
-            $person->toArray()
+            $manager->toArray()
         );
     }
 
@@ -510,7 +510,7 @@ class ManagerTest extends TestCase
         ];
 
         $person = new Manager();
-        $person->create($params);
+        $manager = $person->create($params);
     }
 
     /**
@@ -532,6 +532,105 @@ class ManagerTest extends TestCase
         ];
 
         $person = new Manager();
-        $person->create($params);
+        $manager = $person->create($params);
+    }
+
+    /**
+     * @group App
+     * @group App.Models
+     * @group App.Models.People
+     * @group App.Models.People.Manager
+     * @group App.Models.People.Manager.convert
+     * @group App.Models.People.Manager.convert.success
+     */
+    public function testMassCreateManagerSuccess()
+    {
+        $params = [
+            [
+                'firstName' => 'Joe',
+                'lastName' => 'Shmoe',
+                'fullName' => 'Joe Shmoe',
+                'reportee' => 0,
+            ],
+            [
+                'firstName' => 'John',
+                'lastName' => 'Smith',
+                'fullName' => 'John Smith',
+                'reportee' => 1,
+            ],
+            [
+                'firstName' => 'Rick',
+                'lastName' => 'Astley',
+                'fullName' => 'Rick Astley',
+                'reportee' => 2,
+            ],
+        ];
+
+        $person = new Manager();
+        $managers = $person->convert($params);
+
+        foreach ($managers as $indx => $manager) {
+            $this->assertEquals(
+                Manager::class,
+                get_class($manager)
+            );
+
+            $this->assertEquals(
+                $params[$indx],
+                $manager->toArray()
+            );
+        }
+    }
+
+    /**
+     * @group App
+     * @group App.Models
+     * @group App.Models.People
+     * @group App.Models.People.Manager
+     * @group App.Models.People.Manager.convert
+     * @group App.Models.People.Manager.convert.success
+     * @group App.Models.People.Manager.convert.success.excludeInvalid
+     */
+    public function testMassCreateManagerSuccessExcludeInvalid()
+    {
+        $params = [
+            [
+                'firstName' => 'Joe',
+                'lastName' => 'Shmoe',
+                'fullName' => 'Joe Shmoe',
+                'reportee' => 0,
+            ],
+            [
+                'firstName' => 'John',
+                'lastName' => 'Smith',
+                'fullName' => 'John Smith',
+                'reportee' => 1,
+            ],
+            [
+                'lastName' => 'Astley',
+                'fullName' => 'Rick Astley',
+                'reportee' => 2,
+            ],
+        ];
+
+        $person = new Manager();
+        $managers = $person->convert($params);
+
+        $this->assertEquals(
+            2,
+            count($managers)
+        );
+
+        foreach ($managers as $indx => $manager) {
+            $this->assertEquals(
+                Manager::class,
+                get_class($manager)
+            );
+
+            $this->assertEquals(
+                $params[$indx],
+                $manager->toArray()
+            );
+        }
     }
 }
