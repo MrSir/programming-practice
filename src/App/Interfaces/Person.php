@@ -2,8 +2,6 @@
 
 namespace App\Interfaces;
 
-use App\Models\Person as PersonModel;
-
 /**
  * Interface Person
  * @package App\Interfaces
@@ -14,9 +12,9 @@ interface Person
      * The signature for the factory paradigm create function
      * @param array $params
      *
-     * @return PersonModel
+     * @return mixed
      */
-    public function create(array $params) : PersonModel;
+    public function create(array $params);
 
     /**
      * The first name setter function signature

@@ -7,7 +7,7 @@ use App\Exceptions\EmptyLastName;
 use App\Exceptions\MissingRequiredParameter;
 use App\Interfaces\Person as PersonInterface;
 
-class Person implements PersonInterface
+abstract class Person implements PersonInterface
 {
     /**
      * @var string $firstName
@@ -24,7 +24,7 @@ class Person implements PersonInterface
      */
     protected $fillable = [
         'firstName',
-        'lastName'
+        'lastName',
     ];
 
     /**
@@ -32,7 +32,7 @@ class Person implements PersonInterface
      */
     protected $required = [
         'firstName',
-        'lastName'
+        'lastName',
     ];
 
     /**
@@ -50,13 +50,18 @@ class Person implements PersonInterface
      * @param array $params
      *
      * @throws MissingRequiredParameter
-     * @return Person
+     * @return mixed
      */
-    public function create(array $params): Person
+    public function create(array $params)
     {
         // check the required parameters are present
         foreach ($this->required as $requiredKey) {
-            $condition = !in_array($requiredKey, $params);
+            $paramKeys = array_keys($params);
+
+            $condition = !in_array(
+                $requiredKey,
+                $paramKeys
+            );
 
             if ($condition) {
                 throw new MissingRequiredParameter($requiredKey);
@@ -65,17 +70,24 @@ class Person implements PersonInterface
 
         // populate the fillable attributes
         foreach ($this->fillable as $fillableKey) {
-            $value = $params[$fillableKey];
-            $method = 'set' . ucfirst($fillableKey);
+            $condition = array_key_exists(
+                $fillableKey,
+                $params
+            );
 
-            $this->$method($value);
+            if ($condition) {
+                $value = $params[$fillableKey];
+                $method = 'set' . ucfirst($fillableKey);
+
+                $this->$method($value);
+            }
         }
 
         return $this;
     }
 
     /**
-     * The first name setter function signature
+     * The first name setter function
      *
      * @param string $name
      *
@@ -92,7 +104,7 @@ class Person implements PersonInterface
     }
 
     /**
-     * The first name getter function signature
+     * The first name getter function
      * @return string
      */
     public function getFirstName(): string
@@ -101,7 +113,7 @@ class Person implements PersonInterface
     }
 
     /**
-     * The last name setter function signature
+     * The last name setter function
      *
      * @param string $name
      *
@@ -118,7 +130,7 @@ class Person implements PersonInterface
     }
 
     /**
-     * The last name getter function signature
+     * The last name getter function
      * @return string
      */
     public function getLastName(): string
@@ -127,7 +139,7 @@ class Person implements PersonInterface
     }
 
     /**
-     * The full name getter function signature
+     * The full name getter function
      * @return string
      */
     public function getFullName(): string
@@ -136,10 +148,10 @@ class Person implements PersonInterface
     }
 
     /**
-     * The signature for the toJSON function which serializes the Person into a json string.
-     * @return string
+     * This function returns the serialized object to array
+     * @return array
      */
-    public function toJSON(): string
+    public function toArray(): array
     {
         $serializedObject = [];
 
@@ -149,6 +161,15 @@ class Person implements PersonInterface
             $serializedObject[$field] = $this->$method();
         }
 
-        return json_encode($serializedObject);
+        return $serializedObject;
+    }
+
+    /**
+     * The toJSON function which serializes the Person into a json string.
+     * @return string
+     */
+    public function toJSON(): string
+    {
+        return json_encode($this->toArray());
     }
 }

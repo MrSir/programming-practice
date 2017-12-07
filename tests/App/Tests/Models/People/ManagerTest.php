@@ -17,10 +17,14 @@ class ManagerTest extends TestCase
      * @group App.Models.People.Manager.setFirstName
      * @group App.Models.People.Manager.setFirstName.exists
      */
-    public function testSetFirstNameExists() {
+    public function testSetFirstNameExists()
+    {
         $methods = get_class_methods(new Manager());
 
-        $this->assertContains('setFirstName', $methods);
+        $this->assertContains(
+            'setFirstName',
+            $methods
+        );
     }
 
     /**
@@ -31,11 +35,15 @@ class ManagerTest extends TestCase
      * @group App.Models.People.Manager.setFirstName
      * @group App.Models.People.Manager.setFirstName.success
      */
-    public function testSetFirstNameSuccess() {
+    public function testSetFirstNameSuccess()
+    {
         $person = new Manager();
         $person->setFirstName('Joe');
 
-        $this->assertEquals('Joe', $person->firstName);
+        $this->assertEquals(
+            'Joe',
+            $person->firstName
+        );
     }
 
     /**
@@ -48,7 +56,8 @@ class ManagerTest extends TestCase
      * @group App.Models.People.Manager.setFirstName.failure.null
      * @expectedException TypeError
      */
-    public function testSetFirstNameFailureNull() {
+    public function testSetFirstNameFailureNull()
+    {
         $person = new Manager();
         $person->setFirstName(null);
     }
@@ -62,8 +71,11 @@ class ManagerTest extends TestCase
      * @group App.Models.People.Manager.setFirstName.failure
      * @group App.Models.People.Manager.setFirstName.failure.blank
      * @expectedException App\Exceptions\EmptyFirstName
+     * @expectedExceptionMessage Empty first name.
+     * @expectedExceptionCode 100
      */
-    public function testSetFirstNameFailureBlank() {
+    public function testSetFirstNameFailureBlank()
+    {
         $person = new Manager();
         $person->setFirstName('');
     }
@@ -76,10 +88,14 @@ class ManagerTest extends TestCase
      * @group App.Models.People.Manager.setLastName
      * @group App.Models.People.Manager.setLastName.exists
      */
-    public function testSetLastNameExists() {
+    public function testSetLastNameExists()
+    {
         $methods = get_class_methods(new Manager());
 
-        $this->assertContains('setLastName', $methods);
+        $this->assertContains(
+            'setLastName',
+            $methods
+        );
     }
 
     /**
@@ -90,11 +106,15 @@ class ManagerTest extends TestCase
      * @group App.Models.People.Manager.setLastName
      * @group App.Models.People.Manager.setLastName.success
      */
-    public function testSetLastNameSuccess() {
+    public function testSetLastNameSuccess()
+    {
         $person = new Manager();
         $person->setLastName('Shmoe');
 
-        $this->assertEquals('Shmoe', $person->lastName);
+        $this->assertEquals(
+            'Shmoe',
+            $person->lastName
+        );
     }
 
     /**
@@ -107,7 +127,8 @@ class ManagerTest extends TestCase
      * @group App.Models.People.Manager.setLastName.failure.null
      * @expectedException TypeError
      */
-    public function testSetLastNameFailureNull() {
+    public function testSetLastNameFailureNull()
+    {
         $person = new Manager();
         $person->setLastName(null);
     }
@@ -121,8 +142,11 @@ class ManagerTest extends TestCase
      * @group App.Models.People.Manager.setLastName.failure
      * @group App.Models.People.Manager.setLastName.failure.blank
      * @expectedException App\Exceptions\EmptyLastName
+     * @expectedExceptionMessage Empty last name.
+     * @expectedExceptionCode 200
      */
-    public function testSetLastNameFailureBlank() {
+    public function testSetLastNameFailureBlank()
+    {
         $person = new Manager();
         $person->setLastName('');
     }
@@ -135,10 +159,14 @@ class ManagerTest extends TestCase
      * @group App.Models.People.Manager.getFirstName
      * @group App.Models.People.Manager.getFirstName.exists
      */
-    public function testGetFirstNameExists() {
+    public function testGetFirstNameExists()
+    {
         $methods = get_class_methods(new Manager());
 
-        $this->assertContains('getFirstName', $methods);
+        $this->assertContains(
+            'getFirstName',
+            $methods
+        );
     }
 
     /**
@@ -149,11 +177,15 @@ class ManagerTest extends TestCase
      * @group App.Models.People.Manager.getFirstName
      * @group App.Models.People.Manager.getFirstName.exists
      */
-    public function testGetFirstNameSuccess() {
+    public function testGetFirstNameSuccess()
+    {
         $person = new Manager();
         $person->setFirstName('Joe');
 
-        $this->assertEquals('Joe', $person->getFirstName());
+        $this->assertEquals(
+            'Joe',
+            $person->getFirstName()
+        );
     }
 
     /**
@@ -164,10 +196,14 @@ class ManagerTest extends TestCase
      * @group App.Models.People.Manager.getLastName
      * @group App.Models.People.Manager.getLastName.exists
      */
-    public function testGetLastNameExists() {
+    public function testGetLastNameExists()
+    {
         $methods = get_class_methods(new Manager());
 
-        $this->assertContains('getLastName', $methods);
+        $this->assertContains(
+            'getLastName',
+            $methods
+        );
     }
 
     /**
@@ -178,11 +214,15 @@ class ManagerTest extends TestCase
      * @group App.Models.People.Manager.getLastName
      * @group App.Models.People.Manager.getLastName.exists
      */
-    public function testGetLastNameSuccess() {
+    public function testGetLastNameSuccess()
+    {
         $person = new Manager();
         $person->setLastName('Shmoe');
 
-        $this->assertEquals('Shmoe', $person->getLastName());
+        $this->assertEquals(
+            'Shmoe',
+            $person->getLastName()
+        );
     }
 
     /**
@@ -193,10 +233,14 @@ class ManagerTest extends TestCase
      * @group App.Models.People.Manager.getFullName
      * @group App.Models.People.Manager.getFullName.exists
      */
-    public function testGetFullNameExists() {
+    public function testGetFullNameExists()
+    {
         $methods = get_class_methods(new Manager());
 
-        $this->assertContains('getFullName', $methods);
+        $this->assertContains(
+            'getFullName',
+            $methods
+        );
     }
 
     /**
@@ -207,12 +251,16 @@ class ManagerTest extends TestCase
      * @group App.Models.People.Manager.getFullName
      * @group App.Models.People.Manager.getFullName.success
      */
-    public function testGetFullNameSuccess() {
+    public function testGetFullNameSuccess()
+    {
         $person = new Manager();
         $person->setFirstName('Joe');
         $person->setLastName('Shmoe');
 
-        $this->assertEquals('Joe Shmoe', $person->getFullName());
+        $this->assertEquals(
+            'Joe Shmoe',
+            $person->getFullName()
+        );
     }
 
     /**
@@ -223,10 +271,14 @@ class ManagerTest extends TestCase
      * @group App.Models.People.Manager.setReportee
      * @group App.Models.People.Manager.setReportee.exists
      */
-    public function testSetReporteeExists() {
+    public function testSetReporteeExists()
+    {
         $methods = get_class_methods(new Manager());
 
-        $this->assertContains('setReportee', $methods);
+        $this->assertContains(
+            'setReportee',
+            $methods
+        );
     }
 
     /**
@@ -237,11 +289,15 @@ class ManagerTest extends TestCase
      * @group App.Models.People.Manager.setReportee
      * @group App.Models.People.Manager.setReportee.success
      */
-    public function testSetReporteeSuccess() {
+    public function testSetReporteeSuccess()
+    {
         $person = new Manager();
         $person->setReportee(1);
 
-        $this->assertEquals(1, $person->reportee);
+        $this->assertEquals(
+            1,
+            $person->reportee
+        );
     }
 
     /**
@@ -252,10 +308,14 @@ class ManagerTest extends TestCase
      * @group App.Models.People.Manager.getReportee
      * @group App.Models.People.Manager.getReportee.exists
      */
-    public function testGetReporteeExists() {
+    public function testGetReporteeExists()
+    {
         $methods = get_class_methods(new Manager());
 
-        $this->assertContains('getReportee', $methods);
+        $this->assertContains(
+            'getReportee',
+            $methods
+        );
     }
 
     /**
@@ -266,11 +326,15 @@ class ManagerTest extends TestCase
      * @group App.Models.People.Manager.getReportee
      * @group App.Models.People.Manager.getReportee.success
      */
-    public function testGetReporteeSuccess() {
+    public function testGetReporteeSuccess()
+    {
         $person = new Manager();
         $person->setReportee(1);
 
-        $this->assertEquals(1, $person->getReportee());
+        $this->assertEquals(
+            1,
+            $person->getReportee()
+        );
     }
 
     /**
@@ -282,9 +346,192 @@ class ManagerTest extends TestCase
      * @group App.Models.People.Manager.getReportee.success
      * @group App.Models.People.Manager.getReportee.success.default
      */
-    public function testGetReporteeSuccessDefault() {
+    public function testGetReporteeSuccessDefault()
+    {
         $person = new Manager();
 
-        $this->assertEquals(0, $person->getReportee());
+        $this->assertEquals(
+            0,
+            $person->getReportee()
+        );
+    }
+
+    /**
+     * @group App
+     * @group App.Models
+     * @group App.Models.People
+     * @group App.Models.People.Manager
+     * @group App.Models.People.Manager.toArray
+     * @group App.Models.People.Manager.toArray.exists
+     */
+    public function testToArrayExists()
+    {
+        $methods = get_class_methods(new Manager());
+
+        $this->assertContains(
+            'toArray',
+            $methods
+        );
+    }
+
+    /**
+     * @group App
+     * @group App.Models
+     * @group App.Models.People
+     * @group App.Models.People.Manager
+     * @group App.Models.People.Manager.toArray
+     * @group App.Models.People.Manager.toArray.success
+     */
+    public function testToArraySuccess()
+    {
+        $array = [
+            'firstName' => 'Joe',
+            'lastName' => 'Shmoe',
+            'fullName' => 'Joe Shmoe',
+            'reportee' => 0
+        ];
+
+        $person = new Manager();
+        $person->setFirstName($array['firstName']);
+        $person->setLastName($array['lastName']);
+
+        $this->assertEquals(
+            $array,
+            $person->toArray()
+        );
+    }
+
+    /**
+     * @group App
+     * @group App.Models
+     * @group App.Models.People
+     * @group App.Models.People.Manager
+     * @group App.Models.People.Manager.toJSON
+     * @group App.Models.People.Manager.toJSON.exists
+     */
+    public function testToJSONExists()
+    {
+        $methods = get_class_methods(new Manager());
+
+        $this->assertContains(
+            'toJSON',
+            $methods
+        );
+    }
+
+    /**
+     * @group App
+     * @group App.Models
+     * @group App.Models.People
+     * @group App.Models.People.Manager
+     * @group App.Models.People.Manager.toJSON
+     * @group App.Models.People.Manager.toJSON.success
+     */
+    public function testToJSONSuccess()
+    {
+        $array = [
+            'firstName' => 'Joe',
+            'lastName' => 'Shmoe',
+            'fullName' => 'Joe Shmoe',
+            'reportee' => 1
+        ];
+
+        $person = new Manager();
+        $person->setFirstName($array['firstName']);
+        $person->setLastName($array['lastName']);
+        $person->setReportee($array['reportee']);
+
+        $this->assertEquals(
+            json_encode($array),
+            $person->toJSON()
+        );
+    }
+
+    /**
+     * @group App
+     * @group App.Models
+     * @group App.Models.People
+     * @group App.Models.People.Manager
+     * @group App.Models.People.Manager.create
+     * @group App.Models.People.Manager.create.exists
+     */
+    public function testCreateManagerExists()
+    {
+        $methods = get_class_methods(new Manager());
+
+        $this->assertContains(
+            'create',
+            $methods
+        );
+    }
+
+    /**
+     * @group App
+     * @group App.Models
+     * @group App.Models.People
+     * @group App.Models.People.Manager
+     * @group App.Models.People.Manager.create
+     * @group App.Models.People.Manager.create.success
+     */
+    public function testCreateManagerSuccess()
+    {
+        $params = [
+            'firstName' => 'Joe',
+            'lastName' => 'Shmoe',
+            'fullName' => 'Joe Shmoe',
+            'reportee' => 1
+        ];
+
+        $person = new Manager();
+        $person->create($params);
+
+        $this->assertEquals(
+            $params,
+            $person->toArray()
+        );
+    }
+
+    /**
+     * @group App
+     * @group App.Models
+     * @group App.Models.People
+     * @group App.Models.People.Manager
+     * @group App.Models.People.Manager.create
+     * @group App.Models.People.Manager.create.failure
+     * @group App.Models.People.Manager.create.failure.firstName
+     * @expectedException App\Exceptions\MissingRequiredParameter
+     * @expectedExceptionMessage The firstName parameter is required
+     * @expectedExceptionCode 300
+     */
+    public function testCreateManagerFailureFirstName()
+    {
+        $params = [
+            'lastName' => 'Shmoe',
+        ];
+
+        $person = new Manager();
+        $person->create($params);
+    }
+
+    /**
+     * @group App
+     * @group App.Models
+     * @group App.Models.People
+     * @group App.Models.People.Manager
+     * @group App.Models.People.Manager.create
+     * @group App.Models.People.Manager.create.failure
+     * @group App.Models.People.Manager.create.failure.lastName
+     * @expectedException App\Exceptions\MissingRequiredParameter
+     * @expectedExceptionMessage The lastName parameter is required
+     * @expectedExceptionCode 300
+     */
+    public function testCreateManagerFailureLastName()
+    {
+        $params = [
+            'firstName' => 'Joe',
+        ];
+
+        $person = new Manager();
+        $person->create($params);
     }
 }

@@ -17,7 +17,7 @@ class MissingRequiredParameter extends Exception
     {
         parent::__construct(
             "The {$param} parameter is required.",
-            100
+            300
         );
     }
 }
