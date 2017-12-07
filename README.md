@@ -1,4 +1,4 @@
-# Programming Exercise
+# Coding Challenge
 ## Author
 Mitko Tochev
 December 7th, 2017
